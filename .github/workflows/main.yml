@@ -1,0 +1,22 @@
+on:
+  release:
+    types: [published]
+
+name: release-test
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: set-env
+      id: set-env
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+    - name: echo-env
+      id: echo-env
+      run: echo ${{ steps.set-env.outputs.VERSION }}
