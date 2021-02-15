@@ -12,6 +12,9 @@ on:
     - cron: '*/5 * * * 1-5'
     # - cron: '0 */2 * * 1-5'
 
+env:
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 name: test workflow
 
 jobs:
@@ -34,3 +37,13 @@ jobs:
     - name: echo
       id: echo
       run: echo "hello world"
+
+    - name: Slack Notification on Failure
+      uses: rtCamp/action-slack-notify@v2.0.2
+      if: success()
+      env:
+        SLACK_TITLE: E2E Test Failure
+        SLACK_USERNAME: ci-bot
+        SLACK_ICON_EMOJI: ':robot_face:'
+        SLACK_COLOR: danger
+        SLACK_MESSAGE: 'E2E Test Failed :warning:'
