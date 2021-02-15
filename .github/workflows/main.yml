@@ -2,12 +2,17 @@
 #   release:
 #     types: [published]
 
-on:
-  push:
-    branches:
-      - stage
+# on:
+#   push:
+#     branches:
+#       - stage
 
-name: release-test
+on:
+  schedule:
+    - cron: '*/3 * * * 1-5'
+    # - cron: '0 */2 * * 1-5'
+
+name: test workflow
 
 jobs:
   deploy:
